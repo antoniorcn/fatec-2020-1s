@@ -1,5 +1,6 @@
 package edu.curso;
 
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,10 +16,22 @@ public class TesteServidor {
 			System.out.println("Servidor ativo, aguardando conexão");
 			cliente = server.accept();
 			OutputStream out = cliente.getOutputStream();
-			byte[] bytes = "Ola cliente como você vai ?".getBytes();
-			out.write(bytes);
+			out.write("Ola cliente bem vindo ao servidor\n\r".getBytes());
+			out.write("Tudo o que vc digitar eu mostrarei na console".getBytes());
 			out.flush();
 			System.out.println("Cliente conectado");
+			InputStream in = cliente.getInputStream();
+			boolean sair = false;
+			while (!sair) { 
+				if (in.available() > 0) { 
+					char c = (char)in.read();
+					System.out.print(c);
+					if ((int)c == 27) { 
+						sair = true;
+					}
+				}
+			}
+			
 			cliente.close();
 		} catch(Exception e) { 
 			e.printStackTrace();
