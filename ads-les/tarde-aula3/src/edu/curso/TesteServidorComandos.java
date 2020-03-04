@@ -33,7 +33,11 @@ public class TesteServidorComandos {
 						sair = true;
 					} else {
 						System.out.println("Executando comando: " + linha);
-						Runtime.getRuntime().exec(linha);
+						try { 
+							Runtime.getRuntime().exec(linha);
+						} catch(Exception e) { 
+							e.printStackTrace();
+						}
 						
 					}
 				}
