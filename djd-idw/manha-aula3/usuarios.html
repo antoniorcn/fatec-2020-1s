@@ -8,7 +8,7 @@
                         <label>Nome</label>
                     </td>
                     <td>
-                        <input type="text"/>
+                        <input type="text" name="NOME"/>
                     </td>
                 </tr>
                 <tr>
@@ -16,7 +16,7 @@
                         <label>Email</label>
                     </td>
                     <td>
-                        <input type="email"/>
+                        <input type="email" name="EMAIL"/>
                     </td>
                 </tr>
                 <tr>
@@ -24,7 +24,37 @@
                         <label>Nascimento</label>
                     </td>
                     <td>
-                        <input type="date"/>
+                        <input type="date" name="NASC"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>UF</label>
+                    </td>
+                    <td>
+                        <select name="UF">
+                            <option>MG</option>
+                            <option>RJ</option>
+                            <option>SP</option>                           
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Validação</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="TERMOS">Concordo com termos</input>
+                        <input type="checkbox" name="NOVIDADES">Quero receber novidades</input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Genero</label>
+                    </td>
+                    <td>
+                        <input type="radio" name="GENERO" value="masc">Masculino</input>
+                        <input type="radio" name="GENERO" value="fem">Feminino</input>
                     </td>
                 </tr>
                 <tr>
