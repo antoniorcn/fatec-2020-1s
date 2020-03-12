@@ -1,10 +1,11 @@
 package edu.curso;
 
-import java.util.HashSet;
-import java.util.Iterator;
+import static java.util.stream.Collectors.toList;
+
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Stream;
 
 public class TesteConjunto {
 	class Aluno implements Comparable<Aluno> {
@@ -37,20 +38,15 @@ public class TesteConjunto {
 		alunos.add(a2);
 		alunos.add(a3);
 		alunos.add(a4);
-		Stream<Aluno> alunosMaiusc = alunos.stream().map((e) -> {
+		List<Aluno> alunosMaiusc = alunos.stream().map((e) -> {
 			e.nome = e.nome.toUpperCase();
-			return e;} );
-		Iterator<Aluno> it = alunosMaiusc.iterator();
-		while (it.hasNext()) {
-			Aluno a = it.next();
-			System.out.println(a.nome);
-		}
+			return e;} ).collect(toList());	
 		alunos.remove(a2);
 		System.out.println("Contem aluno 2 " + alunos.contains(a2));
-		print(alunos);
+		print(alunosMaiusc);
 	}
 	
-	public void print(Set<Aluno> alunos) { 
+	public void print(Collection<Aluno> alunos) { 
 		for (Aluno a : alunos) { 
 			System.out.println(a.ra + " - " + a.nome);
 		}
