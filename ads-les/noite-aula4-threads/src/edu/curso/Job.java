@@ -3,7 +3,7 @@ package edu.curso;
 import java.util.Random;
 
 public class Job implements Runnable{
-	public static final int TAMANHO = 10000;
+	public static final int TAMANHO = 100000;
 	int vetor[] = {6, 5, 1, 3, 2, 4, 0};
 	private String nome; 
 	public Job(String n) { 
@@ -24,6 +24,11 @@ public class Job implements Runnable{
 					vetor[j + 1] = vetor[j];
 					vetor[j] = temp;
 				}
+			}
+			try {
+				Thread.sleep(3);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 			float porcentagem = i  * 100 / vetor.length;
 			System.out.printf("%s - executando %6.2f%%\n", nome, porcentagem);
