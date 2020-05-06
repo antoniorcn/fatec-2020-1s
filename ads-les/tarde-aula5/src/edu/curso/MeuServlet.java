@@ -12,21 +12,22 @@ import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/meuservlet")
 public class MeuServlet implements Servlet {
+	private ServletConfig config;
 	@Override
 	public void destroy() {
 	}
 	@Override
 	public ServletConfig getServletConfig() {
-		return null;
+		return config;
 	}
 	@Override
 	public String getServletInfo() {
-		return null;
+		return "Servlet: " + MeuServlet.class.getName();
 	}
 	@Override
-	public void init(ServletConfig arg0) throws ServletException {
+	public void init(ServletConfig cfg) throws ServletException {
+		this.config = cfg;
 	}
-	
 	@Override
 	public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
 		System.out.println("Servlet acionado");
