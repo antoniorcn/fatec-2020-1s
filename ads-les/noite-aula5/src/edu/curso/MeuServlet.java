@@ -11,19 +11,21 @@ import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/meuservlet")
 public class MeuServlet implements Servlet {
+	private ServletConfig sc;
 	@Override
 	public void destroy() {
 	}
 	@Override
 	public ServletConfig getServletConfig() {
-		return null;
+		return sc;
 	}
 	@Override
 	public String getServletInfo() {
-		return null;
+		return "MeuServlet";
 	}
 	@Override
-	public void init(ServletConfig config) throws ServletException {	
+	public void init(ServletConfig config) throws ServletException {
+		sc = config;
 	}
 
 	@Override
