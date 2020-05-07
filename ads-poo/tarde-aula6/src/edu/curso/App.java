@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 public class App extends Application {
@@ -13,10 +14,11 @@ public class App extends Application {
 		Label lbl = new Label("Hello World");
 		lbl.relocate(200, 10);
 		Button btn = new Button("Ok");
+		TextField txt = new TextField();
 		double x = (600 - btn.getWidth()) / 2;
 		double y = (400 - btn.getHeight()) / 2;
 		btn.relocate(x, y);
-		p.getChildren().addAll(lbl, btn);
+		p.getChildren().addAll(lbl, btn, txt);
 		stage.setScene(scn);
 		stage.show();
 		stage.setTitle("Janela principal");
