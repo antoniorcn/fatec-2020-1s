@@ -9,11 +9,29 @@
                 color: red;
             }
             .destaque { 
-                font-size: 120%;
+                font: 48px Impact, sans-serif;
+
             }
             .preto-branco { 
                 color: white;
                 background-color: black;
+            }
+            [checked] { 
+                background-color: red;
+                font-size: 300%;
+            }
+
+            ul::before { 
+                background-color: yellow;
+                content: "Teste de Texto";
+            }
+
+            h1:hover { 
+                background-color: red;
+                color : blue;
+            }
+            input:focus { 
+                font-size: 150%;
             }
         </style>
     </head>
@@ -26,8 +44,13 @@
             <li>Item 3</li>
             <li>Item 4</li>
         </ul>
+        <p checked>Teste Checked</p>
         <p class="destaque preto-branco">Entre em contato para mais informações</p>
         <p id="tel">Tel (11) 99999-9889</p>
         <a href="http://www.uol.com.br">Leia as noticias da UOL</a>
+        <form>
+            <label>Digite seu email</label>
+            <input type="text"/>
+        </form>
     </body>
 </html>
