@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+
+                </div>
+                <div class="col-9">
+                    <h1>Gestão de Usuários</h1>
+                    <form method="GET" action="./usuarios.html">
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">Nome</label>
+                            <div class="col-10">
+                                <input type="text" name="NOME" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label">Email</label>
+                            <div class="col-10">
+                                <input type="email" name="EMAIL" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2">Nascimento</label>
+                            <div class="col-10">
+                                <input type="date" name="NASC" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2">UF</label>
+                            <div class="col-10">
+                                <select name="UF" class="form-control">
+                                    <option>MG</option>
+                                    <option>RJ</option>
+                                    <option>SP</option>                           
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2">Validação</label>
+                            <div class="col-10">
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="TERMOS" class="form-check-input"/>
+                                    <label class="form-check-label">Concordo com termos</label>
+                                    <input type="checkbox" name="NOVIDADES" class="form-check-input" style="margin-left: 20px;"/>
+                                    <label class="form-check-label">Quero receber novidades</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2">Genero</label>
+                            <div class="col-10">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="GENERO" value="masc" class="form-check-input"/>
+                                    <label class="form-check-label">Masculino</label>
+                                    <input type="radio" name="GENERO" value="fem" class="form-check-input" style="margin-left: 20px;"/>
+                                    <label class="form-check-label">Feminino</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>            
+    </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</html>
