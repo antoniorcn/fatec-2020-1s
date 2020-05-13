@@ -22,8 +22,10 @@ public class Login extends HttpServlet{
 		
 		try {
 			Class.forName(DRIVER);
+			System.out.println("Driver Carregado");
 			Connection con = 
 					DriverManager.getConnection(URL, USER, PASS);
+			System.out.println("Conexao feita");
 			String sql = "SELECT * FROM tbl_usuarios "
 					+ "WHERE usuario = ?";
 			PreparedStatement stmt = con.prepareStatement(sql);
@@ -39,8 +41,22 @@ public class Login extends HttpServlet{
 		return false;
 	}
 	
-	@Override
 	public void doGet(HttpServletRequest req, 
+			HttpServletResponse res) throws IOException {
+//		PrintWriter out = res.getWriter();
+//		res.setContentType("text/html");
+//		out.println("<h2>Para fazer o login acesse a pagina "
+//				+ "<a href='./login.html'>login.html</a></h2>");
+
+ 		res.sendRedirect("./login.html");
+		
+//		PrintWriter out = res.getWriter();
+//		res.setContentType("text/html");
+//		out.println("<body><script>location.href='http://www.uol.com.br';</script></body>");
+	}
+	
+	@Override
+	public void doPost(HttpServletRequest req, 
 			HttpServletResponse res) throws IOException { 
 		String user = req.getParameter("TXTUSER");
 		String pass = req.getParameter("TXTPASS");
