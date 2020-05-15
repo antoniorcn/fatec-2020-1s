@@ -20,14 +20,13 @@ public class Bolinha extends Application {
 		double x;
 		double y;
 		double velX = 1;
-		double velY;
+		double velY = 1;
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Group grp = new Group();
 		Scene scn = new Scene(grp);
 		primaryStage.setScene(scn);
-		
 		Canvas canvas = new Canvas(640, 480);
 		GraphicsContext ctx = canvas.getGraphicsContext2D();
 		grp.getChildren().add(canvas);
@@ -39,15 +38,21 @@ public class Bolinha extends Application {
 				ctx.setStroke(Color.DARKBLUE);
 				ctx.setFill(Color.BLUE);
 				ctx.beginPath();
-				ctx.fillOval(p.x, 0, 50, 50);
+				ctx.fillOval(p.x, p.y, 50, 50);
 				p.x += p.velX;
+				p.y += p.velY;
 				if (p.x > canvas.getWidth()) { 
 					p.velX = -1;
+				}
+				if (p.y > canvas.getHeight()) { 
+					p.velY = -1;
+				}
+				if (p.y < 0) { 
+					p.velY = 1;
 				}
 				ctx.stroke();
 			} 
 		}.start();
-		
 		primaryStage.setTitle("Animação com bolinha");
 		primaryStage.show();		
 	}
