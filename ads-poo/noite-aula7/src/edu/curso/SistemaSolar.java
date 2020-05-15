@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class SistemaSolar extends Application {
@@ -38,6 +40,18 @@ public class SistemaSolar extends Application {
 		double centroX = canvas.getWidth()/2;
 		double centroY = canvas.getHeight()/2;
 		final double[] angulo = new double[2];
+		
+		class ExecutaMouse implements EventHandler<MouseEvent> {
+			@Override
+			public void handle(MouseEvent event) {
+				angulo[event.getButton().ordinal() - 1] = 0;
+				
+			} 		
+		}
+		
+		final ExecutaMouse exe = new ExecutaMouse();
+		canvas.addEventFilter(MouseEvent.MOUSE_PRESSED, exe);
+		
 		new AnimationTimer() {
 			@Override
 			public void handle(long now) {
@@ -46,7 +60,7 @@ public class SistemaSolar extends Application {
 				ctx.drawImage(imgSun, 
 						pointSun.getX(), 
 						pointSun.getY());
-				double earthX = centroX  + (50 * Math.cos(angulo[0]));
+				double earthX = centroX  + (100 * Math.cos(angulo[0]));
 				double earthY = centroY + (100 * Math.sin(angulo[0]));
 				Point2D pointEarth = centro(imgEarth, earthX, earthY);  
 				ctx.drawImage(imgEarth, pointEarth.getX(), pointEarth.getY());
