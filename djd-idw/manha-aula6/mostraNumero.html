@@ -1,0 +1,17 @@
+<html>
+    <body>
+        <h1> Mostra numero </h1>
+        <label>Escolha um numero</label>
+        <input id="numero"/>
+        <button onclick="clicado();">Ok</button>
+        <div id="tabuada"></div>
+        <p>Aqui é o fim da página</p>
+    </body>
+
+    <script>
+        function clicado() { 
+            var tabuada = document.getElementById("tabuada");
+            tabuada.innerHTML += "<p>7 X 1 = 7</p>";
+        }
+    </script>
+</html>
