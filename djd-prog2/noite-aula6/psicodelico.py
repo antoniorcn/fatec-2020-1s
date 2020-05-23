@@ -18,6 +18,8 @@ while True:
 
     pygame.display.update()
 
+    pygame.time.delay(100)
+
     # Captura Eventos
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
