@@ -11,14 +11,10 @@ import javafx.stage.Stage;
 public class TesteEvento extends Application {
 	class Interceptador implements EventHandler<ActionEvent>{
 		public void handle(ActionEvent e) { 
-			//System.out.printf("Tipo: %s\n", e.getEventType().getName());
-			//System.out.printf("Target: %s\n", e.getTarget());
-			//System.out.printf("Source: %s\n", e.getSource());
 			Button b = (Button) e.getTarget();
 			System.out.println(b.getText());
 		}
 	}
-	
 	@Override
 	public void start(Stage stage) throws Exception {
 		FlowPane pan = new FlowPane();
