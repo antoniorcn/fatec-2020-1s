@@ -1,0 +1,25 @@
+<html>
+
+    <body>
+        <p id="p1">1</p>
+        <button onclick="incrementar();">Incrementar</button>
+        <button onclick="decrementar();">Decrementar</button>
+    </body>
+
+    <script>
+        let p1 = document.getElementById("p1");
+        console.log(p1);
+        console.log("Acrescentando:");
+        
+
+        function incrementar() { 
+            console.log("Conteudo", p1.innerHTML);
+            p1.innerHTML = parseInt(p1.innerHTML) + 1;
+        }
+
+        function decrementar() { 
+            p1.innerHTML = parseInt(p1.innerHTML) - 1;
+        }
+    </script>
+
+</html>
