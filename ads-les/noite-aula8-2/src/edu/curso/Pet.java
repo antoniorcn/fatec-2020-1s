@@ -2,6 +2,8 @@ package edu.curso;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Pet {
 	private String nome;
 	private String raca;
@@ -21,6 +23,7 @@ public class Pet {
 		this.raca = raca;
 	}
 	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public LocalDate getNascimento() {
 		return nascimento;
 	}
