@@ -43,24 +43,26 @@
 					<button type="submit" class="btn btn-primary">Adicionar</button>
 				</div>
 				
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Nome</th>
-							<th>Raça</th>
-							<th>Nascimento</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% for(Pet p : lista) { %>
+				<% if (lista != null && lista.size() > 0) { %>
+					<table class="table table-striped">
+						<thead>
 							<tr>
-								<td><%=p.getNome()%></td>
-								<td><%=p.getRaca()%></td>
-								<td><%=p.getNascimento()%></td>
+								<th>Nome</th>
+								<th>Raça</th>
+								<th>Nascimento</th>
 							</tr>
-						<% } %>
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							<% for(Pet p : lista) { %>
+								<tr>
+									<td><%=p.getNome()%></td>
+									<td><%=p.getRaca()%></td>
+									<td><%=p.getNascimento()%></td>
+								</tr>
+							<% } %>
+						</tbody>
+					</table>
+				<% } %>
 			</form>
 		</div>
 	</body>
