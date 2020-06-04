@@ -12,7 +12,7 @@
 		
 		<!--  <link rel="stylesheet" href="./resource/css/bootstrap.min.css"> -->
 		<!-- CSS only -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		<link rel="stylesheet" href="./resource/css/bootstrap.min.css"/>
 		
 	</head>
 	<body>
@@ -20,7 +20,7 @@
 			<h1>Registro de Pets</h1>
 			<c:if test="${not empty mensagem}">
 				<div class="alert alert-success alert-dismissible fade show" role="alert">
-				  <strong>Sucesso</strong> ${mensagem}
+				  <strong>Sucesso</strong>${mensagem}
 				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				    <span aria-hidden="true">&times;</span>
 				  </button>
