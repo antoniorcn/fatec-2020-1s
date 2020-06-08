@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Gestão de Pets</title>
+        <meta charset="utf-8"/>
+        <link href="./css/bootstrap.min.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Gestão de Pets</h1>
+            <form action="./petController.php" method="post">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" class="form-control" name="NOME"/>
+                </div>
+                <div class="form-group">
+                    <label>Raça</label>
+                    <select class="form-control" name="RACA">
+                        <option>Bull Dog</option>    
+                        <option>Vira Lata</option>
+                        <option>Poodle</option>
+                        <option>Cocker</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Peso</label>
+                    <input type="number" step="0.1" name="PESO" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label>Nascimento</label>
+                    <input type="date" class="form-control" name="NASC"/>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                    <button type="submit" class="btn btn-primary">Pesquisar</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
