@@ -6,8 +6,10 @@ PRETO = (0x00, 0x00, 0x00)
 TELA_WIDTH = 800
 TELA_HEIGHT = 600
 
-BLK_WIDTH = TELA_WIDTH // 40
-BLK_HEIGHT = TELA_HEIGHT // 20
+VELOCIDADE = 5.0
+
+BLK_WIDTH = TELA_WIDTH // 40 * 3
+BLK_HEIGHT = TELA_HEIGHT // 20 * 3
 
 def load_image(img_set, x, y):
     img_orig = img_set.subsurface((x, y), (16, 16))
@@ -73,16 +75,6 @@ img_grama = load_image(tiles, 16, 128)
 img_parede = load_image(tiles, 48, 0)
 
 
-def desenha_mapa(map, caracter_imagem):
-        for id_linha, linha in enumerate(map):
-                for id_coluna, caracter in enumerate(linha):
-                        if caracter in caracter_imagem:
-                                x = id_coluna * BLK_WIDTH
-                                y = id_linha * BLK_HEIGHT
-                                img = caracter_imagem[caracter]
-                                tela.blit(img, (x, y))
-
-
 def teste_colisao_mapa(personagem, map, lista_caracteres):
         colisoes = []
         for id_linha, linha in enumerate(map):
@@ -99,6 +91,65 @@ def teste_colisao_mapa(personagem, map, lista_caracteres):
         return colisoes
 
 
+class Camera:
+        def __init__(self, position, tamanho):
+                self.window = pygame.Rect(position, tamanho)
+                self.position = position
+                self.offset_x = 0
+                self.offset_y = 0
+                self.clean_image = pygame.Surface(self.window.size)
+                self.clean_image.fill(PRETO)
+                self.draw_area = pygame.Surface(self.window.size)
+
+        def in_viewport(self, r):
+                return self.window.colliderect(r)
+
+        def move(self, pos):
+                self.window.center = pos
+                self.offset_x = self.window.x
+                self.offset_y = self.window.y
+
+        def start_drawing(self):
+                self.draw_area.blit(self.clean_image, (0, 0))
+
+        def draw_group(self, group):
+                for s in group:
+                        if self.in_viewport(s.rect):
+                                self.draw_area.blit(s.image, (s.rect.x - self.offset_x, s.rect.y - self.offset_y))
+
+        def draw_tiles(self, map, caracter_imagem):
+                # Calcula quais colunas dos tiles serão processadas
+                tilewidth = BLK_WIDTH
+                tileheight = BLK_HEIGHT
+                width = len(map[0])
+                height = len(map)
+                cols = self.window.width // tilewidth
+                rows = self.window.height // tileheight
+                start_col = self.window.x // tilewidth
+                end_col = start_col + cols + 2
+                start_row = self.window.y // tileheight
+                end_row = start_row + rows + 2
+                start_col = max(start_col, 0)
+                start_row = max(start_row, 0)
+                end_col = min(end_col, width)
+                end_row = min(end_row, height)
+                # print("start ({}, {})   end({}, {})".format(start_col, start_row, end_col, end_row))
+                for linha in range(start_row, end_row):
+                        for coluna in range(start_col, end_col):
+                                caracter = map[linha][coluna]
+                                if caracter in caracter_imagem:
+                                        x = coluna * tilewidth
+                                        y = linha * tileheight
+                                        img = caracter_imagem[caracter]
+                                        r = pygame.Rect((x, y), (tilewidth, tileheight))
+                                        if self.in_viewport(r):
+                                                self.draw_area.blit(img, (r.x - self.offset_x, r.y - self.offset_y))
+
+        def paint(self, tela):
+                tela.blit(self.draw_area, self.position)
+                pygame.draw.rect(tela, (255, 0, 0), (self.position, self.window.size), 3)
+
+
 class Personagem(pygame.sprite.Sprite):
         def __init__(self):
                 pygame.sprite.Sprite.__init__(self)
@@ -111,7 +162,7 @@ class Personagem(pygame.sprite.Sprite):
                 self.lista_imagens = [car_img_1, car_img_2, car_img_3]
                 self.image_idx = 0
                 self.image = car_img_1
-                self.rect = pygame.Rect((32, 32), (BLK_WIDTH, BLK_HEIGHT))
+                self.rect = pygame.Rect((BLK_WIDTH * 3, BLK_HEIGHT * 3), (BLK_WIDTH, BLK_HEIGHT))
 
         def update(self):
                 self.image = self.lista_imagens[self.image_idx]
@@ -145,13 +196,13 @@ class Personagem(pygame.sprite.Sprite):
         def processar_evento(self, e):
                 if e.type == pygame.KEYDOWN:
                         if e.key == pygame.K_d:
-                                self.vel_x = 1.0
+                                self.vel_x = VELOCIDADE
                         if e.key == pygame.K_a:
-                                self.vel_x = -1.0
+                                self.vel_x = -VELOCIDADE
                         if e.key == pygame.K_w:
-                                self.vel_y = -1.0
+                                self.vel_y = -VELOCIDADE
                         if e.key == pygame.K_s:
-                                self.vel_y = 1.0
+                                self.vel_y = VELOCIDADE
                 if e.type == pygame.KEYUP:
                         if e.key in [pygame.K_a, pygame.K_d]:
                                 self.vel_x = 0.0
@@ -161,15 +212,18 @@ class Personagem(pygame.sprite.Sprite):
 
 heroi = Personagem()
 grupo_heroi = pygame.sprite.Group(heroi)
-
+cam = Camera((0, 0), tela.get_size())
 while True:
-        desenha_mapa(mapa, {"p": img_parede, " ": img_grama})
-        desenha_mapa(mapa_objs, {"v": img_vaso})
+        cam.start_drawing()
+        cam.draw_tiles(mapa, {"p": img_parede, " ": img_grama})
+        cam.draw_tiles(mapa_objs, {"v": img_vaso})
 
-        grupo_heroi.draw(tela)
+        cam.draw_group(grupo_heroi)
+        cam.paint(tela)
         pygame.display.update()
 
         grupo_heroi.update()
+        cam.move(heroi.rect.center)
 
         for e in pygame.event.get():
                 if e.type == pygame.QUIT:
