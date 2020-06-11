@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class PetController {
@@ -14,25 +14,17 @@ public class PetController {
 	@Autowired
 	private List<Pet> lista;
 	
-	@GetMapping("/pet")
-	public ModelAndView pet() { 
-		System.out.println("### Controller Executado ###");
-		Pet p = new Pet();
-		p.setNome("Rex");
+	@RequestMapping(value = "/pet", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView pet(@ModelAttribute("petAtual") Pet p) { 
+		System.out.println("*** Pet: " + p);
+		if (p.getNome() != null ) { 
+			lista.add(p);
+		}
+		Pet pet = new Pet();
 		
 		ModelAndView mv = new ModelAndView("pet");
-		mv.addObject("petAtual", p);
+		mv.addObject("petAtual", pet);
+		mv.addObject("petLista", lista);
 		return mv;
 	}
-	
-	@PostMapping("/petController")
-	public ModelAndView petController(@ModelAttribute("petAtual") Pet p) {
-		lista.add(p);
-		
-		p = new Pet();
-		ModelAndView mv = new ModelAndView("pet");
-		mv.addObject("petAtual", p);
-		return mv;
-	}
-
 }

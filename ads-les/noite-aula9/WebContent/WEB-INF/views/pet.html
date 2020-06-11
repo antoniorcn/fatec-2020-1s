@@ -8,7 +8,7 @@
 	<body>
 		<div class="container">
 			<h1>Gestão de Pets</h1>
-			<form th:action="@{/petController}" th:object="${petAtual}" th:method="post">
+			<form th:action="@{/pet}" th:object="${petAtual}" th:method="post">
 				<div class="form-group">
 					<label>Nome: </label>
 					<input type="text" class="form-control" th:field="*{nome}"/>
@@ -30,6 +30,23 @@
 				</div>
 			
 			</form>
+			
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>Nome</td>
+						<td>Raca</td>
+						<td>Nascimento</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="pet : ${petLista}">
+						<td th:text="${pet.nome}">.</td>
+						<td th:text="${pet.raca}">.</td>
+						<td th:text="${pet.nascimento}">.</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
