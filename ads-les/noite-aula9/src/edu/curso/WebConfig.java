@@ -1,5 +1,8 @@
 package edu.curso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -55,9 +58,13 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-          .addResourceHandler("/resources/**")
-          .addResourceLocations("/resources/");
+        .addResourceHandler("/resources/**")
+        .addResourceLocations("/resources/");
    }
 
 	
+	@Bean
+	public List<Pet> gerarLista() { 
+		return new ArrayList<>();
+	}
 }
