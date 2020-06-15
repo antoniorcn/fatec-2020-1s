@@ -1,0 +1,46 @@
+# Startar primeiramente o MYSQL através do XAMPP
+
+
+# Entrar no diretorio do MYSQL
+cd \xampp\mysql\bin
+
+# Acessar o sistema de DB
+mysql -u root
+
+
+# Listar os bancos de dados
+show databases;
+
+# Conectar a um banco de dados
+use petshop;
+
+
+# Para listar as tabelas do banco
+show tables;
+
+# Para ver a estrutura da tabelas
+desc <nome da tabela>;
+Exmeplo: desc funcionario;
+
+
+# Comando SQL para ler dados da tabela
+SELECT * FROM <nome da tabela>;
+Exemplo: SELECT * FROM funcionario;
+
+
+# Comando para criar banco de dados;
+create database <nome do banco>;
+Exemplo: create database pet_shop;
+
+# Exemplo de criação de Tabela
+create table pets (
+	nome char(50),
+	raca char(30),
+	peso decimal(5,1),
+	nascimento date );
+
+
+# Exemplo de inserção de Registro
+insert into pets (nome, raca, peso, nascimento) values ('Rex', 'vira-lata', 14.6, '2018-02-09');
+
+INSERT INTO pets (nome, raca, peso, nascimento) VALUES ('Totó', 'pastor-alemão', 32.7, '2016-03-12');
