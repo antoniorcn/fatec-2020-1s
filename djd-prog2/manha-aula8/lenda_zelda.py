@@ -8,6 +8,7 @@ TELA_HEIGHT = 600
 VELOCIDADE = 5.0
 BLK_WIDTH = TELA_WIDTH // 40 * 2
 BLK_HEIGHT = TELA_HEIGHT // 20 * 2
+acc_y = 0.0098
 
 
 def load_image(img_set, x, y):
@@ -169,6 +170,8 @@ class Personagem(pygame.sprite.Sprite):
                 if self.image_idx >= len(self.lista_imagens):
                         self.image_idx = 0
 
+                self.vel_y += acc_y
+
                 colisoes_movimento = teste_colisao_mapa(self, mapa, ["p"])
                 if len(colisoes_movimento) == 0:
                         self.rect.move_ip(self.vel_x, self.vel_y)
@@ -202,11 +205,14 @@ class Personagem(pygame.sprite.Sprite):
                                 self.vel_y = -VELOCIDADE
                         if e.key == pygame.K_s:
                                 self.vel_y = VELOCIDADE
+                        if e.key == pygame.K_SPACE:
+                                self.vel_y = -3 * VELOCIDADE
                 if e.type == pygame.KEYUP:
                         if e.key in [pygame.K_a, pygame.K_d]:
                                 self.vel_x = 0.0
                         if e.key in [pygame.K_w, pygame.K_s]:
                                 self.vel_y = 0.0
+
 
 
 heroi = Personagem()
