@@ -8,7 +8,7 @@ public class Pet {
 	private long id;
 	private String nome;
 	private String raca;
-	private LocalDate nascimento;
+	private LocalDate nascimento = LocalDate.now();
 	private double peso;
 	
 	public long getId() {
