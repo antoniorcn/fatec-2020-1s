@@ -25,6 +25,17 @@ BLOCK_W = WIDTH // 16
 BLOCK_H = HEIGHT // 12
 
 caracteres = pygame.image.load("./characters.png")
+basictiles = pygame.image.load("./basictiles.png")
+
+
+class Bloco(pygame.sprite.Sprite):
+    def __init__(self, linha, coluna):
+        pygame.sprite.Sprite.__init__(self)
+        img_orig = basictiles.subsurface((16 * 1, 16 * 0), (16, 16))
+        self.image = pygame.transform.scale(img_orig, (BLOCK_W, BLOCK_H))
+        x = coluna * BLOCK_W
+        y = linha * BLOCK_H
+        self.rect = pygame.Rect((x, y), (BLOCK_W, BLOCK_H))
 
 
 class Boy(pygame.sprite.Sprite):
@@ -58,18 +69,29 @@ class Boy(pygame.sprite.Sprite):
 boy = Boy()
 herois = pygame.sprite.Group(boy)
 
+blocos = pygame.sprite.Group()
+for linha, lin in enumerate(matriz):
+    for coluna in range(0, 16):
+        elemento = matriz[linha][coluna]
+        if elemento == "P":
+            bloco = Bloco(linha, coluna)
+            blocos.add(bloco)
+
 while True:
     # pintar o cenario
-    for linha, lin in enumerate(matriz):
-        for coluna in range(0, 16):
-            x = coluna * BLOCK_W
-            y = linha * BLOCK_H
-            bloco = matriz[linha][coluna]
-            cor = (0, 0, 0)
-            if bloco == "P":
-                cor = (255, 255, 0)
-            pygame.draw.rect(screen, cor, ((x, y), (BLOCK_W, BLOCK_H)), 0)
+    # for linha, lin in enumerate(matriz):
+    #     for coluna in range(0, 16):
+    #         x = coluna * BLOCK_W
+    #         y = linha * BLOCK_H
+    #         bloco = matriz[linha][coluna]
+    #         cor = (0, 0, 0)
+    #         if bloco == "P":
+    #             cor = (255, 255, 0)
+    #         pygame.draw.rect(screen, cor, ((x, y), (BLOCK_W, BLOCK_H)), 0)
 
+    screen.fill((0, 0, 0))
+
+    blocos.draw(screen)
     herois.draw(screen)
 
     pygame.display.update()
