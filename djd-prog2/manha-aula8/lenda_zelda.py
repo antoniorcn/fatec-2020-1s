@@ -8,7 +8,7 @@ TELA_HEIGHT = 600
 VELOCIDADE = 5.0
 BLK_WIDTH = TELA_WIDTH // 40 * 2
 BLK_HEIGHT = TELA_HEIGHT // 20 * 2
-acc_y = 0.0098
+acc_y = 0
 
 
 def load_image(img_set, x, y):
