@@ -1,0 +1,40 @@
+cd C:\xampp\mysql\bin
+
+mysql -u root
+
+sintaxe: create database <nome do database>; 
+exemplo:  create database pets;
+
+
+-- Usar database
+sintaxe: use <nome do database>;
+exemplo: use pets;
+
+-- Criar tabela
+sintaxe: create table <nome da tabela> (
+				<nome do campo1> <tipo1> [<opções1>],
+				<nome do campoN> <tipoN> [<opçõesN>] );
+exemplo: 
+	CREATE TABLE pet (
+		nome CHAR(100),
+		raca VARCHAR(50),
+		peso DECIMAL(5, 1)
+	);
+		
+-- Consultar databases criados
+sintaxe: show databases;
+
+-- Listar as tabelas de um database
+sintaxe: show tables;
+
+-- Descrever uma tabela
+sintaxe: desc <nome da tabela>;
+exemplo: desc pet;
+
+-- Ler todos os registros de uma tabela
+sintaxe: SELECT * FROM <nome da tabela>;
+exemplo: SELECT * FROM pet;
+
+-- Inserir um novo registro
+sintaxe: INSERT INTO <nome tabela> (<nome do campo1>, <nome do campoN>) VALUES (<valor do campo1>, <valor do campo N>);
+exemplo: INSERT INTO pet (nome, raca, peso) VALUES ('Rex', 'Vira lata', 16.8);
