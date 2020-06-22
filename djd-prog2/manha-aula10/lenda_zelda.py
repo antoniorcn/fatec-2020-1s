@@ -11,10 +11,50 @@ BLK_HEIGHT = TELA_HEIGHT // 20 * 2
 acc_y = 0
 
 
-def load_image(img_set, x, y):
-    img_orig = img_set.subsurface((x, y), (16, 16))
+class ListaCircular():
+        def __init__(self, collection, pause=20):
+            self.lista = list(collection)
+            self.indice = 0
+            self.pause = pause
+            self.cont_ciclos = 0
+
+        def get(self):
+            self.cont_ciclos += 1
+            if len(self.lista) > 0:
+                result = self.lista[self.indice]
+                if self.cont_ciclos > self.pause:
+                    self.indice += 1
+                    self.cont_ciclos = 0
+                if self.indice >= len(self.lista):
+                    self.indice = 0
+                return result
+            else:
+                return None
+
+
+def get_image_by_gid(img_set, gid, qtd_images_linha=9,
+                     margin_top=0, margin_left=0,
+                     space_horizontal=0, space_vertical=0,
+                     width=16, height=16):
+        print("GID ", gid, "Qtd Imagens por Linha: ", qtd_images_linha)
+        linha = gid // qtd_images_linha
+        coluna = gid % qtd_images_linha
+        x = (coluna * (width + space_horizontal)) + margin_left
+        y = (linha * (height + space_vertical)) + margin_top
+        quadro = img_set.subsurface(pygame.Rect((x, y), (width, height)))
+        return quadro
+
+
+def load_image(img_set, gid, qtd_images_linha):
+    img_orig = get_image_by_gid(img_set, gid, qtd_images_linha)
     img_scaled = pygame.transform.scale(img_orig, (BLK_WIDTH, BLK_HEIGHT))
     return img_scaled
+
+def load_images(img_set, lista_gids, qtd_images_linha=8):
+    lista = []
+    for gid in lista_gids:
+        lista.append(load_image(img_set, gid, qtd_images_linha))
+    return lista
 
 # p - parede
 # <space> - area em branco
@@ -71,9 +111,9 @@ tiles = pygame.image.load("./basictiles.png").convert_alpha()
 characters = pygame.image.load("./characters.png").convert_alpha()
 space = pygame.image.load("./space.jpg")
 
-img_vaso = load_image(tiles, 48, 48)
-img_grama = load_image(tiles, 16, 128)
-img_parede = load_image(tiles, 48, 0)
+img_vaso = load_image(tiles, 27, 8)
+img_grama = load_image(tiles, 64, 8)
+img_parede = load_image(tiles, 3, 8)
 
 
 def teste_colisao_mapa(personagem, map, lista_caracteres):
@@ -161,20 +201,32 @@ class Personagem(pygame.sprite.Sprite):
                 self.hp = 100
                 self.vel_x = 0.0
                 self.vel_y = 0.0
-                car_img_1 = load_image(characters, 48, 0)
-                car_img_2 = load_image(characters, 64, 0)
-                car_img_3 = load_image(characters, 80, 0)
-                self.lista_imagens = [car_img_1, car_img_2, car_img_3]
-                self.image_idx = 0
-                self.image = car_img_1
+                self.lista_imagens_down = ListaCircular(load_images(characters, [3, 4, 5], 12) )
+                self.lista_imagens_left = ListaCircular(load_images(characters, [15, 16, 17], 12))
+                self.lista_imagens_right = ListaCircular(load_images(characters, [27, 28, 29], 12))
+                self.lista_imagens_up = ListaCircular(load_images(characters, [39, 40, 41], 12))
+                self.lista_imagens_parado = ListaCircular(load_images(characters, [4], 12))
+                self.lista_imagens = self.lista_imagens_left
+                self.image = self.lista_imagens.get()
                 self.rect = pygame.Rect((BLK_WIDTH * 3, BLK_HEIGHT * 3), (BLK_WIDTH, BLK_HEIGHT))
+                self.estado = 'S'       # U-Up   D-Down   L-Left   R-Right   S-Stopped
 
         def update(self):
-                self.image = self.lista_imagens[self.image_idx]
-                self.image_idx += 1
-                if self.image_idx >= len(self.lista_imagens):
-                        self.image_idx = 0
+                if self.estado == 'D':
+                        self.lista_imagens = self.lista_imagens_down
+                elif self.estado == 'L':
+                        self.lista_imagens = self.lista_imagens_left
+                elif self.estado == 'U':
+                        self.lista_imagens = self.lista_imagens_up
+                elif self.estado == 'R':
+                        self.lista_imagens = self.lista_imagens_right
+                elif self.estado == 'S':
+                        self.lista_imagens = self.lista_imagens_parado
 
+                if self.vel_x == 0 and self.vel_y == 0:
+                        self.estado = 'S'
+
+                self.image = self.lista_imagens.get()
                 self.vel_y += acc_y
 
                 colisoes_movimento = teste_colisao_mapa(self, mapa, ["p"])
@@ -204,12 +256,16 @@ class Personagem(pygame.sprite.Sprite):
                 if e.type == pygame.KEYDOWN:
                         if e.key == pygame.K_d:
                                 self.vel_x = VELOCIDADE
+                                self.estado = 'R'
                         if e.key == pygame.K_a:
                                 self.vel_x = -VELOCIDADE
+                                self.estado = 'L'
                         if e.key == pygame.K_w:
                                 self.vel_y = -VELOCIDADE
+                                self.estado = 'U'
                         if e.key == pygame.K_s:
                                 self.vel_y = VELOCIDADE
+                                self.estado = 'D'
                         if e.key == pygame.K_SPACE:
                                 self.vel_y = -3 * VELOCIDADE
                 if e.type == pygame.KEYUP:
