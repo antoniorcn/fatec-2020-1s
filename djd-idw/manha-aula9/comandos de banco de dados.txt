@@ -32,6 +32,9 @@ Exemplo: SELECT * FROM funcionario;
 create database <nome do banco>;
 Exemplo: create database pet_shop;
 
+# Usar o banco de dados
+use pet_shop;
+
 # Exemplo de criação de Tabela
 create table pets (
 	nome char(50),
