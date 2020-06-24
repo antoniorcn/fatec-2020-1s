@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -16,6 +17,7 @@ public class Pet {
 	private String nome;
 	private String raca;
 	private LocalDate nascimento = LocalDate.now();
+	private boolean vacinaAntiRabica = false;
 	
 	@Id
 	@GeneratedValue
@@ -48,5 +50,13 @@ public class Pet {
 	}
 	public void setNascimento(LocalDate nascimento) {
 		this.nascimento = nascimento;
+	}
+	
+	@Type(type="yes_no")
+	public boolean isVacinaAntiRabica() {
+		return vacinaAntiRabica;
+	}
+	public void setVacinaAntiRabica(boolean vacinaAntiRabica) {
+		this.vacinaAntiRabica = vacinaAntiRabica;
 	}
 }
