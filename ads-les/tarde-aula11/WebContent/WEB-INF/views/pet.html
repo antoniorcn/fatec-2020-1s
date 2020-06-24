@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<link rel="stylesheet" href="./resources/css/bootstrap.min.css"/>
+		<title>Registro de Pets</title>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Registro de Pets</h1>
+			<div class="alert alert-success" role="alert">
+			...
+			</div>
+			<form action="#" th:action="@{/pet}" th:method="post" th:object="${PET}">
+				<div class="form-group">
+					<label>Nome: </label>
+					<input type="text" name="nome" class="form-control" th:field="*{nome}"/>
+				</div>
+				<div class="form-group">
+					<label>Raça: </label>
+					<select name="raca" class="form-control" th:field="*{raca}">
+						<option value="viralata">Vira Lata</option>
+						<option value="buldog">Buldog</option>
+						<option value="poodle">Poodle</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Nascimento: </label>
+					<input type="date" name="nascimento" class="form-control" th:field="*{nascimento}"/>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary" name="cmd" value="adicionar">Adicionar</button>
+					<button type="submit" class="btn btn-primary" name="cmd" value="pesquisar">Pesquisar</button>
+				</div>
+				<table class="table table-striped" style="margin-top: 50px;">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Raça</th>
+							<th>Nascimento</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>...</td>
+							<td>...</td>
+							<td>...</td>
+						</tr>
+					</tbody>	
+				</table>
+			</form>
+		</div>
+	</body>
+</html>
