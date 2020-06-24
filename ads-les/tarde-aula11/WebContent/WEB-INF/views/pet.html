@@ -8,9 +8,9 @@
 	<body>
 		<div class="container">
 			<h1>Registro de Pets</h1>
-			<div class="alert alert-success" role="alert">
-			...
-			</div>
+				<div th:if="${MENSAGEM}" class="alert alert-success" role="alert">
+					<p th:text="${MENSAGEM}">
+				</div>
 			<form action="#" th:action="@{/pet}" th:method="post" th:object="${PET}">
 				<div class="form-group">
 					<label>Nome: </label>
@@ -32,7 +32,7 @@
 					<button type="submit" class="btn btn-primary" name="cmd" value="adicionar">Adicionar</button>
 					<button type="submit" class="btn btn-primary" name="cmd" value="pesquisar">Pesquisar</button>
 				</div>
-				<table class="table table-striped" style="margin-top: 50px;">
+				<table th:if="${LISTA}" class="table table-striped" style="margin-top: 50px;">
 					<thead>
 						<tr>
 							<th>Nome</th>
@@ -41,10 +41,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>...</td>
-							<td>...</td>
-							<td>...</td>
+						<tr th:each="p : ${LISTA}">
+							<td th:text="${p.nome}">...</td>
+							<td th:text="${p.raca}">...</td>
+							<td th:text="${p.nascimento}">...</td>
 						</tr>
 					</tbody>	
 				</table>
