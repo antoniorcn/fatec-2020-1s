@@ -35,6 +35,8 @@ public class PetController {
 			Set<Pet> lista = petRepository.searchByNome(p.getNome());
 			msg = String.format("Foram encontrados %d pets com o nome %s", lista.size(), p.getNome());
 			if (lista.size() > 0) { 
+				// mv = new ModelAndView("resultado_pet");
+				mv.setViewName("resultado_pet");
 				mv.addObject("petLista", lista);
 			}
 		}
