@@ -32,8 +32,11 @@ public class PetController {
 			petRepository.save(p);
 			msg = String.format("O pet %s foi adicionado com sucesso", p.getNome());
 		} else if ("pesquisar".equals(cmd)) { 
-			Set<Pet> lista = petRepository.findByNome(p.getNome());
+			Set<Pet> lista = petRepository.searchByNome(p.getNome());
 			msg = String.format("Foram encontrados %d pets com o nome %s", lista.size(), p.getNome());
+			if (lista.size() > 0) { 
+				mv.addObject("petLista", lista);
+			}
 		}
 		mv.addObject("MSG", msg);
 		return mv;
