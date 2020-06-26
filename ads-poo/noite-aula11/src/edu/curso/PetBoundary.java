@@ -2,15 +2,16 @@ package edu.curso;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,9 +22,10 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class PetBoundary extends Application implements EventHandler<ActionEvent>{
+	private PetControl control = new PetControl();
 	private TextField txtId = new TextField();
 	private TextField txtNome = new TextField();
-	private TextField txtRaca = new TextField();
+	private ComboBox<String> txtRaca = new ComboBox<>(control.getRacas());
 	private TextField txtPeso = new TextField();
 	private TextField txtNascimento = new TextField();
 	
@@ -31,8 +33,6 @@ public class PetBoundary extends Application implements EventHandler<ActionEvent
 	private Button btnPesquisar = new Button("Pesquisar");
 	
 	private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
-	private PetControl control = new PetControl();
 	private TableView<Pet> tableView = new TableView<>(control.getLista());
 	
 	public void generateTable() { 
@@ -107,7 +107,7 @@ public class PetBoundary extends Application implements EventHandler<ActionEvent
 		try { 
 			p.setId( Long.parseLong(txtId.getText()) );
 			p.setNome( txtNome.getText() );
-			p.setRaca( txtRaca.getText() );
+			p.setRaca( txtRaca.getSelectionModel().getSelectedItem() );
 			p.setPeso( Double.parseDouble(txtPeso.getText()) );
 			LocalDate dt = LocalDate.parse(txtNascimento.getText(), dtf);
 			p.setNascimento( dt );
@@ -121,7 +121,7 @@ public class PetBoundary extends Application implements EventHandler<ActionEvent
 		if (p != null) {
 			txtId.setText( String.valueOf(p.getId()) );
 			txtNome.setText( p.getNome() );
-			txtRaca.setText( p.getRaca() );
+			txtRaca.getSelectionModel().select( p.getRaca() );
 			txtPeso.setText( String.valueOf(p.getPeso()) );
 			txtNascimento.setText( dtf.format(p.getNascimento()) );
 		}
