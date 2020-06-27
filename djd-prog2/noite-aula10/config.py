@@ -1,3 +1,5 @@
+import pygame
+
 WIDTH = 800
 HEIGHT = 600
 
@@ -28,17 +30,22 @@ def get_image_bygid(spritesheet, gid, columns=12, w=16, h=16, space_h=0, space_v
     return spritesheet.subsurface((x, y), (w, h))
 
 
+def get_image(spritesheet, gid, columns=12):
+    img = get_image_bygid(spritesheet, gid, columns=columns)
+    return pygame.transform.scale(img, (BLOCK_W, BLOCK_H))
+
+
 class ListaCircularImage:
     def __init__(self, spritesheet, columns=12, gids=[], delay=10):
         self.img_lista = []
         for gid in gids:
-            img = get_image_bygid(spritesheet, gid, columns=columns)
+            img = get_image(spritesheet, gid, columns)
             self.img_lista.append(img)
         self.index = 0
         self.delay = delay
         self.count_delay = 0
 
-    def get_image(self):
+    def next(self):
         self.count_delay += 1
         if self.count_delay >= self.delay:
             self.index += 1

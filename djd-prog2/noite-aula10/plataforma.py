@@ -22,27 +22,29 @@ class Bloco(pygame.sprite.Sprite):
 class Fantasma(pygame.sprite.Sprite):
     def __init__(self, linha, coluna):
         pygame.sprite.Sprite.__init__(self)
-        ghost_orig = get_image_bygid(caracteres, 55, columns=12)
-        self.image = pygame.transform.scale(ghost_orig, (BLOCK_W, BLOCK_H))
+        self.img_lista = ListaCircularImage(caracteres, 12, [54, 55, 56], 20)
+        self.image = self.img_lista.next()
         self.rect = pygame.Rect((coluna * BLOCK_W, linha * BLOCK_H), (BLOCK_W, BLOCK_H))
         self.vel_x = 0
         self.vel_y = 0
 
     def update(self, *args):
         self.rect.centerx += self.vel_x
+        self.image = self.img_lista.next()
 
 
 class Tiro(pygame.sprite.Sprite):
     def __init__(self, personagem):
         pygame.sprite.Sprite.__init__(self)
-        ghost_orig = get_image_bygid(basictiles, 60, columns=8)
-        self.image = pygame.transform.scale(ghost_orig, (BLOCK_W // 2, BLOCK_H // 2))
+        self.img_lista = ListaCircularImage(basictiles, 8, [60, 61], 20)
+        self.image = self.img_lista.next()
         self.rect = pygame.Rect(personagem.rect.center, (BLOCK_W // 2, BLOCK_H // 2))
         self.vel_x = 0
         self.vel_y = 0
 
     def update(self, *args):
         self.rect.centerx += self.vel_x
+        self.image = self.img_lista.next()
 
 
 class Camera:
@@ -111,6 +113,7 @@ while True:
     # calcular regras
     herois.update()
     tiros.update()
+    inimigos.update()
     boy.teste_colisao(blocos)
 
     pygame.sprite.groupcollide(inimigos, tiros, True, True)
@@ -137,7 +140,10 @@ while True:
             if e.key == pygame.K_x:
                 tiro = Tiro(boy)
                 tiros.add(tiro)
-                tiro.vel_x = 1
+                if boy.estado == "LEFT":
+                    tiro.vel_x = -1
+                elif boy.estado in ["RIGHT", "STOP"]:
+                    tiro.vel_x = 1
         if e.type == pygame.KEYUP:
 #            if e.key == pygame.K_LEFT or e.key == pygame.K_RIGHT:
             if e.key in [pygame.K_LEFT, pygame.K_RIGHT]:
